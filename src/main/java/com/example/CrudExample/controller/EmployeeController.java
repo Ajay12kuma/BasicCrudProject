@@ -16,28 +16,28 @@ public class EmployeeController {
 	@Autowired
 	private Employeeservice employeeservice;
 	@GetMapping("/")
-	public String viewHomePage(Model model) {
+	public String viewHomePage(Model model) {   //retriew the current list of employee
 		model.addAttribute("listEmplyees", employeeservice.getAllEmployees());
 		return "index";
 	}
-	@GetMapping("/showNewEmployeeForm")
+	@GetMapping("/showNewEmployeeForm")   //retriew form for adding employee
 	public String showNewEmployeeForm(Model model) {
 		Employee employee = new Employee();
 		model.addAttribute("employee", employee);
 		return "new_emp";
 	}
-	@PostMapping("/saveEmployee")
+	@PostMapping("/saveEmployee")   //for saving the employee details
 	public String saveEmployee(@ModelAttribute("employee") Employee employee) {
 		employeeservice.saveEmployee(employee);
 		return "redirect:/";
 	}
-	@GetMapping("/showFormUpdate/{id}")
+	@GetMapping("/showFormUpdate/{id}")  //for updating the existing employee records
 	public String showFormFoUpdate(@PathVariable(value ="id") long id,Model model){
 		Employee employee = employeeservice.getEmployeeById(id);
 		model.addAttribute("employee",employee);
 		return "update_employee";
 	}
-	@GetMapping("/deleteEmployee/{id}")
+	@GetMapping("/deleteEmployee/{id}") //deleting the employee from list
 	public String deleteEmployee(@PathVariable(value ="id") long id) {
 		this.employeeservice.deleteEmpById(id);
 		return "redirect:/";
